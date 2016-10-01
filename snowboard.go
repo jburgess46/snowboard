@@ -5,6 +5,7 @@ package snowboard
 #cgo CFLAGS: -I./ext/drafter/src/ -I./ext/drafter/ext/snowcrash/src/
 #cgo darwin LDFLAGS: -L"./ext/drafter/build/out/Release/" -ldrafter -lsos -lsnowcrash -lmarkdownparser -lsundown -lc++
 #cgo linux LDFLAGS: -L"./ext/drafter/build/out/Release/" -ldrafter -lsos -lsnowcrash -lmarkdownparser -lsundown -lstdc++
+#cgo windows LDFLAGS: -L"./ext/drafter/build/Release/lib/" -llibdrafter -llibsos -llibsnowcrash -llibmarkdownparser -llibsundown -lstdc++
 #include <stdlib.h>
 #include <stdio.h>
 #include "drafter.h"

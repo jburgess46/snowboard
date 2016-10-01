@@ -1,0 +1,27 @@
+version: "{build}"
+os: Visual Studio 2015 CTP
+clone_folder: c:\gopath\src\github.com\subosito\snowboard
+environment:
+  GOPATH: c:\gopath
+  matrix:
+    - VS_VERSION: MSVC2015
+install:
+  - choco install mingw
+  - curl -fsS -o c:\tools\mingw64\bin\lib2a.exe https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/lib2a/LIB2A-2.0.exe
+  - set PATH=c:\tools\mingw64\bin;%GOPATH%\bin;%PATH%
+  - go version
+  - go env
+  - git submodule update --init --recursive
+  - ext\drafter\vcbuild.bat %VS_VERSION%
+  - cd %GOPATH%\src\github.com\subosito\snowboard\ext\drafter\build\Release\lib
+  - cd %GOPATH%\src\github.com\subosito\snowboard
+build: off
+test: off
+before_build:
+  - go get github.com/mjibson/esc
+  - go generate ./cmd/snowboard/main.go
+build_script:
+  - echo %cd%
+  - go build -x -o snowboard ./cmd/snowboard/...
+test_script:
+  - go test -v
